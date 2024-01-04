@@ -1,11 +1,27 @@
+# Importing necessary decorators from Django Rest Framework
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+
+# Importing Response class for handling API responses
 from rest_framework.response import Response
+
+# Importing status codes to denote HTTP status in responses
 from rest_framework import status
+
+# Importing authentication classes for API endpoints
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+
+# Importing permission classes to control access to API endpoints
 from rest_framework.permissions import IsAuthenticated
+
+# Importing the User model from Django's built-in authentication system
 from django.contrib.auth.models import User
+
+# Importing a helper function to get an object or 404 error if not found
 from django.shortcuts import get_object_or_404
+
+# Importing Token model to manage authentication tokens
 from rest_framework.authtoken.models import Token
+
 
 from .serializers import UserSerializer
 
