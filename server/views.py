@@ -55,6 +55,26 @@ def signup(request):
     except Exception as e:
         return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    """
+    Logout the user by invalidating the token.
+    """
+    try:
+        # Get the token associated with the user
+        token = Token.objects.get(user=request.user)
+        # Delete the token
+        token.delete()
+        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+    except Token.DoesNotExist:
+        # If token doesn't exist, it means the user is already logged out
+        return Response({"detail": "User is not logged in."}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
