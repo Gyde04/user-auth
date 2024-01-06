@@ -83,3 +83,28 @@ def test_token(request):
     Test authentication token.
     """
     return Response("Authentication passed for {}".format(request.user.username))
+
+
+from django.contrib.auth import get_user_model
+
+@api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])  # Add appropriate authentication classes
+@permission_classes([IsAuthenticated])           # Add appropriate permission classes
+def delete_user(request, user_id):
+    """
+    Delete a user by user_id.
+    """
+    try:
+        # Check if the requesting user is an admin or has permission to delete users
+        if not request.user.is_staff:
+            return Response({"detail": "Permission denied."}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Get the user by user_id or return 404 if not found
+        user = get_object_or_404(get_user_model(), id=user_id)
+        
+        # Delete the user
+        user.delete()
+        
+        return Response({"detail": "User deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+    except Exception as e:
+        return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

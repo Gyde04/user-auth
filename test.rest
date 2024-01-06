@@ -14,7 +14,7 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/test_token
 Content-Type: application/json
-Authorization: Token 098a96e17e0942d87ea582ee57cd61031022f2a4
+Authorization: Token e61756255626a57e22fd3195f5a076b55b6fcb56
 
 {}
 
@@ -22,6 +22,14 @@ Authorization: Token 098a96e17e0942d87ea582ee57cd61031022f2a4
 
 POST http://127.0.0.1:8000/logout
 Content-Type: application/json
-Authorization: Token 098a96e17e0942d87ea582ee57cd61031022f2a4
+Authorization: Tokene 61756255626a57e22fd3195f5a076b55b6fcb56
 
 {}
+
+###
+
+DELETE http://127.0.0.1:8000/users/10/delete/
+Authorization: Token e61756255626a57e22fd3195f5a076b55b6fcb56
+
+{}
+
